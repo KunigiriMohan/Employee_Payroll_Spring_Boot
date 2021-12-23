@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeService implements InterfaceEmployeeservice {
+
+    List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
     /**
      * method to get employeedetails
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
-        List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-        employeePayrollList.add(new EmployeePayrollData(1, new EmployeePayrollDTO("Mohan", 3000000)));
         return employeePayrollList;
     }
 
@@ -32,8 +32,7 @@ public class EmployeService implements InterfaceEmployeeservice {
      */
     @Override
     public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-        EmployeePayrollData employeePayrollData = new EmployeePayrollData(empId, new EmployeePayrollDTO("Mohan", 400000));
-        return employeePayrollData;
+        return employeePayrollList.get(empId-1);
     }
 
     /**
@@ -41,7 +40,8 @@ public class EmployeService implements InterfaceEmployeeservice {
      */
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, employeePayrollDTO);
+        EmployeePayrollData employeePayrollData = new EmployeePayrollData(employeePayrollList.size()+1, employeePayrollDTO);
+        employeePayrollList.add(employeePayrollData);
         return employeePayrollData;
     }
 
@@ -49,8 +49,11 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to update Employee Details
      */
     @Override
-    public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, employeePayrollDTO);
+    public EmployeePayrollData updateEmployeePayrollData(int empID,EmployeePayrollDTO employeePayrollDTO) {
+        EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empID);
+        employeePayrollData.setEmployeePayrollDTO(employeePayrollDTO);
+        employeePayrollList.set(empID-1, employeePayrollData);
+
         return employeePayrollData;
     }
 
@@ -59,6 +62,6 @@ public class EmployeService implements InterfaceEmployeeservice {
      */
     @Override
     public void deleteEmployeePayrollData(int empId) {
+        employeePayrollList.remove(empId-1);
     }
- 
 }
