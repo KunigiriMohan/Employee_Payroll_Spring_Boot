@@ -2,6 +2,8 @@ package com.application.EmployeePayrollApp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
 import com.application.EmployeePayrollApp.DTO.ResponseDTO;
 import com.application.EmployeePayrollApp.model.EmployeePayrollData;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @PutMapping : Defining URL Path of API which perform PUT operation
  * @DeleteMapping : Defining URL Path of API which perform DELETE opertion
  * @Autowired : Dependency Injection
+ * @Valid : Checking Requested bean is valid or not
  */
 
 @RestController
@@ -54,7 +57,7 @@ public class EmployeePayrollController {
      */
     @GetMapping("/get/{empID}")
     public ResponseEntity<ResponseDTO> getEmployeeDetails(@PathVariable("empID") int empID){
-        List<EmployeePayrollData> employeePayrollData = interfaceEmployeeservice.getEmployeePayrollData();
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.getEmployeePayrollDataById(empID);
         ResponseDTO responseDTO = new ResponseDTO("Get Call Success for Id : ", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
         
@@ -66,8 +69,8 @@ public class EmployeePayrollController {
      * @return : ResponseEntity of Employee Details Data
      */
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> addEmployeeDetails(@RequestBody EmployeePayrollDTO employeePayrollDTO){
-        List<EmployeePayrollData>employeePayrollData = interfaceEmployeeservice.getEmployeePayrollData();
+    public ResponseEntity<ResponseDTO> addEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO){
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.createEmployeePayrollData(employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Create Employe Payroll Data Successfull", employeePayrollData);
         return new ResponseEntity<ResponseDTO>( responseDTO,HttpStatus.OK);
     }
@@ -77,9 +80,9 @@ public class EmployeePayrollController {
      * @param employeePayrollDTO
      * @return : ResponseEntity of Updated Employee Details Data
      */
-    @PutMapping("/update")
-    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@RequestBody EmployeePayrollDTO employeePayrollDTO){
-        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.updateEmployeePayrollData(employeePayrollDTO);
+    @PutMapping("/update/{empID}")
+    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, @PathVariable ("empID") int empID){
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.updateEmployeePayrollData(empID,employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data :", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
