@@ -30,4 +30,15 @@ public class EmployeePayrollExceptionHandler {
         ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST Request ", errMsg);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * method to handle when user Id not found
+     * @param exception
+     * @return : Response Entity of Exception
+     */
+    @ExceptionHandler(EmployeePayrollException.class)
+    public ResponseEntity<ResponseDTO> handlerEmployeePayrollException(EmployeePayrollException exception){
+        ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST Request ", exception.getMessage());
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+    }
 }
