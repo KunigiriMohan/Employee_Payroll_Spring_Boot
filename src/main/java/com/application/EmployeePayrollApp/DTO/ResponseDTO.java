@@ -1,6 +1,10 @@
 package com.application.EmployeePayrollApp.DTO;
 
-public class ResponseDTO {
+import lombok.Data;
+/**
+ * @Data : Using lombok to autogenerate toString() , Getters and Setters.
+ */
+public @Data class ResponseDTO {
     public String message;
     public Object data;
     
@@ -12,22 +16,5 @@ public class ResponseDTO {
     public ResponseDTO(String message, Object employeePayrollData) {
         this.message = message;
         this.data = employeePayrollData;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-       
+    }   
 }
