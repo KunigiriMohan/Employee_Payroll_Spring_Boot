@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @SpringBootApplication : main application class
- * @Slf4j : Using lombok log.
+ * @Slf4j : Using lombok for log message.
  */
 @SpringBootApplication
 @Slf4j
