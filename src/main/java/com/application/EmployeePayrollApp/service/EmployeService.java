@@ -35,7 +35,7 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method get Employee Details by Id if Id not found Throws Exception
      */
     @Override
-    public EmployeePayrollData getEmployeePayrollDataById(int empId) {
+    public EmployeePayrollData getEmployeePayrollDataById(Long empId) {
         return employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
     }
 
@@ -53,7 +53,7 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to update Employee Details
      */
     @Override
-    public EmployeePayrollData updateEmployeePayrollData(int empID,EmployeePayrollDTO employeePayrollDTO) {
+    public EmployeePayrollData updateEmployeePayrollData(Long empID,EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empID);
         employeePayrollData.updateEmployeeDetails(employeePayrollDTO);
         return employeePayrollRepository.save(employeePayrollData);
@@ -63,7 +63,15 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to delete Employee Details
      */
     @Override
-    public void deleteEmployeePayrollData(int empId) {
+    public void deleteEmployeePayrollData(Long empId) {
         employeePayrollRepository.deleteById(empId);
     }
+
+    /**
+     * get Employee of a paricular Department
+     */
+    @Override
+    public List<EmployeePayrollData> getEmployeesByDepartment(String department) {
+        return employeePayrollRepository.findEmployeesByDepartment(department);
+    } 
 }
