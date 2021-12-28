@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * @RestController : Defining Class as a RestController
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/EmployeeDetails/")
+@Slf4j
 public class EmployeePayrollController {
 
     @Autowired
@@ -70,9 +73,10 @@ public class EmployeePayrollController {
      */
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> addEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO){
+        log.debug("EmployeDTO : "+employeePayrollDTO.toString());
         EmployeePayrollData employeePayrollData = interfaceEmployeeservice.createEmployeePayrollData(employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Create Employe Payroll Data Successfull", employeePayrollData);
-        return new ResponseEntity<ResponseDTO>( responseDTO,HttpStatus.OK);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 
     /**
