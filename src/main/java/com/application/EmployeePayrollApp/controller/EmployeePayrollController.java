@@ -1,14 +1,11 @@
 package com.application.EmployeePayrollApp.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
 import com.application.EmployeePayrollApp.DTO.ResponseDTO;
 import com.application.EmployeePayrollApp.model.EmployeePayrollData;
 import com.application.EmployeePayrollApp.service.InterfaceEmployeeservice;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -59,7 +55,7 @@ public class EmployeePayrollController {
      * @return ResponseEntity of Employee Details of given ID
      */
     @GetMapping("/get/{empID}")
-    public ResponseEntity<ResponseDTO> getEmployeeDetails(@PathVariable("empID") int empID){
+    public ResponseEntity<ResponseDTO> getEmployeeDetails(@PathVariable("empID") Long empID){
         EmployeePayrollData employeePayrollData = interfaceEmployeeservice.getEmployeePayrollDataById(empID);
         ResponseDTO responseDTO = new ResponseDTO("Get Call Success for Id : ", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
@@ -85,7 +81,7 @@ public class EmployeePayrollController {
      * @return : ResponseEntity of Updated Employee Details Data
      */
     @PutMapping("/update/{empID}")
-    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, @PathVariable ("empID") int empID){
+    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, @PathVariable ("empID") Long empID){
         EmployeePayrollData employeePayrollData = interfaceEmployeeservice.updateEmployeePayrollData(empID,employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data :", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
@@ -97,9 +93,21 @@ public class EmployeePayrollController {
      * @return :ResponseEntity
      */
     @DeleteMapping("/delete/{empId}")
-    public ResponseEntity<ResponseDTO> deleteEmployeeDetails(@PathVariable("empId") int empId){
+    public ResponseEntity<ResponseDTO> deleteEmployeeDetails(@PathVariable("empId") Long empId){
         interfaceEmployeeservice.deleteEmployeePayrollData(empId);
         ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully :  ","Deleted Id"+empId);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+    }
+
+    /**
+     * API for get Employee Details by Deaprtment
+     * @param department
+     * @return : Response Body of Employee List by Department with status 
+     */
+    @GetMapping("/department/{department}")
+    public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("department") String department){
+        List<EmployeePayrollData> empDataList = interfaceEmployeeservice.getEmployeesByDepartment(department);
+        ResponseDTO responseDTO = new ResponseDTO("Get Call For ID Successfull", empDataList);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 }
