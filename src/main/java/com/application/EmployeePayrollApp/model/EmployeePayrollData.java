@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -28,7 +29,9 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "employee_table")
-public @Data class EmployeePayrollData {
+@NoArgsConstructor
+@Data
+public class EmployeePayrollData {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,12 +50,10 @@ public @Data class EmployeePayrollData {
 	@ElementCollection
 	@CollectionTable(name = "employee_department",joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "department")
-	
 	private List<String> department;
 	
 	/**
 	 * Defining Constructer
-	 * @param id
 	 * @param employeePayrollDTO
 	 *
 	 */
@@ -72,6 +73,4 @@ public @Data class EmployeePayrollData {
 		this.profilePic=employeePayrollDTO.profilePic;
 		this.department=employeePayrollDTO.department;
 	}
-
-	public EmployeePayrollData(){}
 }
