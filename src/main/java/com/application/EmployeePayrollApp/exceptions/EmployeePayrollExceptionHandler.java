@@ -3,8 +3,6 @@ package com.application.EmployeePayrollApp.exceptions;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.application.EmployeePayrollApp.DTO.ResponseDTO;
-
-import org.apache.logging.log4j.message.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * @ExceptionHandler : to declare a method to handle particular Exception
  */
 
- @Slf4j
+@Slf4j
 @ControllerAdvice
 public class EmployeePayrollExceptionHandler {
 
