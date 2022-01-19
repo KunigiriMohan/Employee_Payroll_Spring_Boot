@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,7 +33,7 @@ public class EmployeePayrollExceptionHandler {
     public ResponseEntity<ResponseDTO> handlerMethodArgumentNotValidException(MethodArgumentNotValidException exception){
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
         List<String> errMsg = errorList.stream().map(objErr -> objErr.getDefaultMessage()).collect(Collectors.toList());
-        ResponseDTO responseDTO = new ResponseDTO(message, errMsg);
+        ResponseDTO responseDTO = new ResponseDTO(message, errMsg,HttpStatus.BAD_REQUEST);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
     }
 
@@ -45,7 +45,7 @@ public class EmployeePayrollExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ResponseDTO> handlingHttpMessageNotReadableException(HttpMessageNotReadableException exception){
         log.error("Invalid Date Format",exception);
-        ResponseDTO responseDTO = new ResponseDTO(message ,"Should have date in the Format dd MM yyyy");
+        ResponseDTO responseDTO = new ResponseDTO(message ,"Should have date in the Format dd MM yyyy",HttpStatus.BAD_REQUEST);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
     }
 
@@ -56,7 +56,18 @@ public class EmployeePayrollExceptionHandler {
      */
     @ExceptionHandler(EmployeePayrollException.class)
     public ResponseEntity<ResponseDTO> handlerEmployeePayrollException(EmployeePayrollException exception){
-        ResponseDTO responseDTO = new ResponseDTO(message, exception.getMessage());
+        ResponseDTO responseDTO = new ResponseDTO(message, exception.getMessage(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * method to handle Token is not entered by user
+     * @param exception
+     * @return : ResponseEntity of Exception
+     */
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<ResponseDTO> missingRequestHeaderException(MissingRequestHeaderException exception){
+        ResponseDTO responseDTO = new ResponseDTO(message ,"Enter your Token",HttpStatus.BAD_REQUEST);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.BAD_REQUEST);
     }
 }

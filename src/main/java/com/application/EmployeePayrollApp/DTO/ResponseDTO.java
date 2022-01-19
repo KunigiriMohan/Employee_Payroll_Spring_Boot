@@ -1,5 +1,6 @@
 package com.application.EmployeePayrollApp.DTO;
 
+import org.springframework.http.HttpStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public  class ResponseDTO {
     public String message;
-    public Object data;  
+    public Object data;
+    public HttpStatus httpStatus;
 }
