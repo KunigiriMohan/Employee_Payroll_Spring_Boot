@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
 import com.application.EmployeePayrollApp.DTO.ResponseDTO;
 import com.application.EmployeePayrollApp.model.EmployeePayrollData;
+import com.application.EmployeePayrollApp.model.User;
 import com.application.EmployeePayrollApp.service.InterfaceEmployeeservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @RestController
-@RequestMapping("/EmployeeDetails/")
+@RequestMapping("/employeedetails/")
 @Slf4j
 public class EmployeePayrollController {
 
@@ -43,9 +45,9 @@ public class EmployeePayrollController {
      * @return : ResonseEntity of EmployeeDetails
      */
     @RequestMapping("/get")
-    public ResponseEntity<ResponseDTO> getEmployeeDetails(){
-        List<EmployeePayrollData> employeePayrollData = interfaceEmployeeservice.getEmployeePayrollData(); 
-        ResponseDTO responseDTO = new ResponseDTO("Get call Success", employeePayrollData);
+    public ResponseEntity<ResponseDTO> getEmployeeDetails(@RequestHeader String token){
+        List<EmployeePayrollData> employeePayrollData = interfaceEmployeeservice.getEmployeePayrollData(token); 
+        ResponseDTO responseDTO = new ResponseDTO("Get call Success", employeePayrollData, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 
@@ -55,9 +57,9 @@ public class EmployeePayrollController {
      * @return ResponseEntity of Employee Details of given ID
      */
     @GetMapping("/get/{empID}")
-    public ResponseEntity<ResponseDTO> getEmployeeDetails(@PathVariable("empID") Long empID){
-        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.getEmployeePayrollDataById(empID);
-        ResponseDTO responseDTO = new ResponseDTO("Get Call Success for Id : ", employeePayrollData);
+    public ResponseEntity<ResponseDTO> getEmployeeDetails(@PathVariable("empID") Long empID,@RequestHeader String token){
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.getEmployeePayrollDataById(empID,token);
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Success for Id : ", employeePayrollData, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
         
     }
@@ -68,10 +70,10 @@ public class EmployeePayrollController {
      * @return : ResponseEntity of Employee Details Data
      */
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> addEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO){
+    public ResponseEntity<ResponseDTO> addEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO,@RequestHeader String token){
         log.debug("EmployeDTO : "+employeePayrollDTO.toString());
-        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.createEmployeePayrollData(employeePayrollDTO);
-        ResponseDTO responseDTO = new ResponseDTO("Create Employe Payroll Data Successfull", employeePayrollData);
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.createEmployeePayrollData(employeePayrollDTO,token);
+        ResponseDTO responseDTO = new ResponseDTO("Create Employe Payroll Data Successfull", employeePayrollData, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 
@@ -81,9 +83,9 @@ public class EmployeePayrollController {
      * @return : ResponseEntity of Updated Employee Details Data
      */
     @PutMapping("/update/{empID}")
-    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, @PathVariable ("empID") Long empID){
-        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.updateEmployeePayrollData(empID,employeePayrollDTO);
-        ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data :", employeePayrollData);
+    public ResponseEntity<ResponseDTO> updateEmployeeDetails(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, @PathVariable ("empID") Long empID,@RequestHeader String token){
+        EmployeePayrollData employeePayrollData = interfaceEmployeeservice.updateEmployeePayrollData(empID,employeePayrollDTO,token);
+        ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data :", employeePayrollData, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 
@@ -93,21 +95,33 @@ public class EmployeePayrollController {
      * @return :ResponseEntity
      */
     @DeleteMapping("/delete/{empId}")
-    public ResponseEntity<ResponseDTO> deleteEmployeeDetails(@PathVariable("empId") Long empId){
-        interfaceEmployeeservice.deleteEmployeePayrollData(empId);
-        ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully :  ","Deleted Id"+empId);
+    public ResponseEntity<ResponseDTO> deleteEmployeeDetails(@PathVariable("empId") Long empId,@RequestHeader String token){
+        interfaceEmployeeservice.deleteEmployeePayrollData(empId,token);
+        ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully :  ","Deleted Id"+empId, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 
     /**
-     * API for get Employee Details by Deaprtment
-     * @param department
-     * @return : Response Body of Employee List by Department with status 
+     * API for Registering User 
+     * @param user
+     * @return : Response Entity of User Details
      */
-    @GetMapping("/department/{department}")
-    public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("department") String department){
-        List<EmployeePayrollData> empDataList = interfaceEmployeeservice.getEmployeesByDepartment(department);
-        ResponseDTO responseDTO = new ResponseDTO("Get Call For ID Successfull", empDataList);
+    @PostMapping("/registeruser")
+    public ResponseEntity<ResponseDTO> generateUser(@RequestBody User user){
+        User userDetailUser = interfaceEmployeeservice.createUser(user);
+        ResponseDTO responseDTO = new ResponseDTO("Create Call Success ",userDetailUser, HttpStatus.OK);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+    }
+
+    /**
+     * API for to LoginUser
+     * @param user
+     * @return : ResponseEntity of Token
+     */
+    @GetMapping("/token")
+    public ResponseEntity<ResponseDTO> loginUser(@RequestBody User user){
+        String userDetailUser = interfaceEmployeeservice.generateToken(user);
+        ResponseDTO responseDTO = new ResponseDTO("Create Call Success ",userDetailUser, HttpStatus.OK);
         return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 }
