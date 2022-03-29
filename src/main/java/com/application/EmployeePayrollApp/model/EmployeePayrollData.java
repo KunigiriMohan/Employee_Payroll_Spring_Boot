@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,49 +30,63 @@ import lombok.NoArgsConstructor;
  * @Table : to Create table
  */
 @Entity
-@Table(name = "employee_table")
-@NoArgsConstructor
+@Table(name = "employees_list")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeePayrollData {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "employee_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long empId;
-
-	@Column(name = "name")
-	private String name;
-	private long salary;
+	private String username;
+	private String profile;
+	private String salary;
 	private String gender;
-	private LocalDate startDate;
+	private String day;
+	private String month;
+	private String year;
 	private String note;
-	private String profilePic;
 	
 	
 	@ElementCollection
-	@CollectionTable(name = "employee_department",joinColumns = @JoinColumn(name = "id"))
+	@CollectionTable(name = "employee_department_list",joinColumns = @JoinColumn(name = "id"))
 	@Column(name = "department")
 	private List<String> department;
+
+	public EmployeePayrollData(String username, String profile, String salary, String gender, String day, String month,
+			String year, String note, List<String> department) {
+		super();
+		this.username = username;
+		this.profile = profile;
+		this.salary = salary;
+		this.gender = gender;
+		this.day = day;
+		this.month = month;
+		this.year = year;
+		this.note = note;
+		this.department = department;
+	}
 	
 	/**
 	 * Defining Constructer
 	 * @param employeePayrollDTO
 	 *
 	 */
-	public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO){
+	/*public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO){
 		this.updateEmployeeDetails(employeePayrollDTO);
-	}
+	}*/
 	/**
 	 * Constructor to define all variables from DTO object
 	 * @param employeePayrollDTO
 	 */
-	public void updateEmployeeDetails(EmployeePayrollDTO employeePayrollDTO) {
-		this.name = employeePayrollDTO.name;
+	/*public void updateEmployeeDetails(EmployeePayrollDTO employeePayrollDTO) {
+		this.username = employeePayrollDTO.name;
 		this.salary=employeePayrollDTO.salary;
 		this.gender=employeePayrollDTO.gender;
 		this.startDate=employeePayrollDTO.startDate;
 		this.note=employeePayrollDTO.note;
 		this.profilePic=employeePayrollDTO.profilePic;
 		this.department=employeePayrollDTO.department;
-	}
+	}*/
 }

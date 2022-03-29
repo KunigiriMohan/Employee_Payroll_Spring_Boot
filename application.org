@@ -1,0 +1,30 @@
+2021-12-25 12:52:12.105  INFO 8080 --- [restartedMain] c.a.E.EmployeePayrollAppApplication      : Starting EmployeePayrollAppApplication using Java 17.0.1 on Mohan with PID 8080 (C:\Users\kmoha\OneDrive\Desktop\CFP Practice\Employee_Payroll_Spring_Boot_Day6\target\classes started by kmoha in C:\Users\kmoha\OneDrive\Desktop\CFP Practice\Employee_Payroll_Spring_Boot_Day6)
+2021-12-25 12:52:12.109  INFO 8080 --- [restartedMain] c.a.E.EmployeePayrollAppApplication      : No active profile set, falling back to default profiles: default
+2021-12-25 12:52:12.714  INFO 8080 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-12-25 12:52:12.748  INFO 8080 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2021-12-25 12:52:13.055  INFO 8080 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-12-25 12:52:13.059  INFO 8080 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-12-25 12:52:13.060  INFO 8080 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.55]
+2021-12-25 12:52:13.062  WARN 8080 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : This listener must only be nested within Server elements, but is in [TomcatEmbeddedContext].
+2021-12-25 12:52:13.068  INFO 8080 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2021-12-25 12:52:13.071  INFO 8080 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2021-12-25 12:52:13.074  INFO 8080 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2021-12-25 12:52:13.078  INFO 8080 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2021-12-25 12:52:13.143  INFO 8080 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-12-25 12:52:13.148  INFO 8080 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1025 ms
+2021-12-25 12:52:13.245  INFO 8080 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-12-25 12:52:13.260  INFO 8080 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2021-12-25 12:52:13.265  WARN 8080 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-12-25 12:52:13.327  INFO 8080 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2021-12-25 12:52:13.329  INFO 8080 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-12-25 12:52:13.368  INFO 8080 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-12-25 12:52:13.371  INFO 8080 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-12-25 12:52:13.438  WARN 8080 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-12-25 12:52:13.762  INFO 8080 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-12-25 12:52:13.795  INFO 8080 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-12-25 12:52:13.805  INFO 8080 --- [restartedMain] c.a.E.EmployeePayrollAppApplication      : Started EmployeePayrollAppApplication in 1.829 seconds (JVM running for 469.135)
+2021-12-25 12:52:13.825  INFO 8080 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-12-25 12:52:13.833  INFO 8080 --- [restartedMain] c.a.E.EmployeePayrollAppApplication      : Employee Payroll App Started  COMMON in Environment
+2021-12-25 12:52:19.296  INFO 8080 --- [Thread-23] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-12-25 12:52:19.298  INFO 8080 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2021-12-25 12:52:19.313  INFO 8080 --- [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.

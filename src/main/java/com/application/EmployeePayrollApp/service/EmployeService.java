@@ -1,7 +1,6 @@
 package com.application.EmployeePayrollApp.service;
 
 import java.util.List;
-import java.util.Optional;
 import com.application.EmployeePayrollApp.DTO.EmployeePayrollDTO;
 import com.application.EmployeePayrollApp.exceptions.EmployeePayrollException;
 import com.application.EmployeePayrollApp.model.EmployeePayrollData;
@@ -12,6 +11,7 @@ import com.application.EmployeePayrollApp.utility.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * @Service : creating service layer
@@ -46,11 +46,11 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to get employeedetails
      */
     @Override
-    public List<EmployeePayrollData> getEmployeePayrollData(String token) {
-        if (jwtTokenUtil.isValidToken(token)){
+    public List<EmployeePayrollData> getEmployeePayrollData(/*String token*/) {
+        /*if (jwtTokenUtil.isValidToken(token)){*/
             return employeePayrollRepository.findAll();
-        }
-        else throw new EmployeePayrollException("User Not Found");
+        //}
+        //else throw new EmployeePayrollException("User Not Found");
     }
 
     /**
@@ -68,13 +68,13 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to add Employee Details
      */
     @Override
-    public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO,String token) {
-        if (jwtTokenUtil.isValidToken(token)){
-            EmployeePayrollData employeePayrollData = new EmployeePayrollData( employeePayrollDTO);
-            log.debug("Employee Data : "+employeePayrollData.toString());
-            return employeePayrollRepository.save(employeePayrollData);
-        }
-        else throw new EmployeePayrollException("User Not Found"); 
+    public EmployeePayrollData createEmployeePayrollData(EmployeePayrollData employeePayrollDTO) {
+        //if (jwtTokenUtil.isValidToken(token)){
+            //EmployeePayrollData employeePayrollData = new EmployeePayrollData( employeePayrollDTO);
+            //log.debug("Employee Data : "+employeePayrollData.toString());
+            return employeePayrollRepository.save(employeePayrollDTO);
+        //}
+        //else throw new EmployeePayrollException("User Not Found"); 
     }
 
     /**
@@ -84,7 +84,7 @@ public class EmployeService implements InterfaceEmployeeservice {
     public EmployeePayrollData updateEmployeePayrollData(Long empID,EmployeePayrollDTO employeePayrollDTO,String token) {
         if (jwtTokenUtil.isValidToken(token)){
             EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empID,token);
-            employeePayrollData.updateEmployeeDetails(employeePayrollDTO);
+            //employeePayrollData.updateEmployeeDetails(employeePayrollDTO);
             return employeePayrollRepository.save(employeePayrollData);
         }
         else throw new EmployeePayrollException("User Not Found");
@@ -94,11 +94,11 @@ public class EmployeService implements InterfaceEmployeeservice {
      * method to delete Employee Details
      */
     @Override
-    public void deleteEmployeePayrollData(Long empId,String token) {
-        if (jwtTokenUtil.isValidToken(token)){
+    public void deleteEmployeePayrollData(Long empId/*,String token*/) {
+        //if (jwtTokenUtil.isValidToken(token)){
             employeePayrollRepository.deleteById(empId);
-        }
-        else throw new EmployeePayrollException("User Not Found");
+        //}
+        //else throw new EmployeePayrollException("User Not Found");
     }
 
     /**
@@ -113,7 +113,7 @@ public class EmployeService implements InterfaceEmployeeservice {
             User userDetails=userRepository.getUserDetails(user.getUserName() ,user.getPassWord());
             if(userDetails==null){
                 return userRepository.save(user);
-        }
+        } 
             else{
                 throw new EmployeePayrollException("User Already Present");
             }
@@ -123,7 +123,7 @@ public class EmployeService implements InterfaceEmployeeservice {
     /**
      * implementing method generatingToken 
      */
-    @Override
+    /*@Override
     public String generateToken(User user) {
         Optional<User> userOptional = userRepository.findById(userRepository.getUserDetails(user.getUserName() ,user.getPassWord()).getID());
         if(userOptional.isPresent()){
@@ -133,5 +133,5 @@ public class EmployeService implements InterfaceEmployeeservice {
         else{
             throw new EmployeePayrollException("User Not Found");
         }   
-    } 
+    } */
 }
