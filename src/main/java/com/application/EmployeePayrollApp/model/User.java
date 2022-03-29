@@ -27,5 +27,28 @@ public class User {
     private Long iD;
     public String userName;
     public String passWord;
-    
+
+    public Long getiD() {
+        return iD;
+    }
+
+    public void setiD(Long iD) {
+        this.iD = iD;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
 }
